@@ -9,9 +9,9 @@
 
         <nav class="hidden md:block">
             <ul class="flex space-x-6 font-semibold">
-                <li><a routerLink="#" class="hover:text-yellow-500 cursor-pointer">Explorar</a></li>
-                <li><a routerLink="#" class="hover:text-yellow-500 cursor-pointer">Anunciar</a></li>
-                <li><a routerLink="#" class="hover:text-yellow-500 cursor-pointer">Meus Anúncios</a></li>
+                <li><a routerLink="explorar" class="hover:text-yellow-500 cursor-pointer">Explorar</a></li>
+                <li><a routerLink="anunciar" class="hover:text-yellow-500 cursor-pointer">Anunciar</a></li>
+                <li><a routerLink="meus-anuncios" class="hover:text-yellow-500 cursor-pointer">Meus Anúncios</a></li>
                 <li><a routerLink="#" class="hover:text-yellow-500 cursor-pointer">Sair</a></li>
             </ul>
         </nav>
@@ -28,17 +28,17 @@
     <nav *ngIf="isMenuOpen" class="md:hidden mt-4">
         <ul class="flex flex-col divide-y divide-gray-500/50 font-semibold text-center">
             <li>
-                <a routerLink="#" class="block py-3 hover:text-yellow-500 cursor-pointer">
+                <a routerLink="/layout/explorar" class="block py-3 hover:text-yellow-500 cursor-pointer">
                     Explorar
                 </a>
             </li>
             <li>
-                <a routerLink="#" class="block py-3 hover:text-yellow-500 cursor-pointer">
+                <a routerLink="/layout/anunciar" class="block py-3 hover:text-yellow-500 cursor-pointer">
                     Anunciar
                 </a>
             </li>
             <li>
-                <a routerLink="#" class="block py-3 hover:text-yellow-500 cursor-pointer">
+                <a routerLink="/layout/meus-anuncios" class="block py-3 hover:text-yellow-500 cursor-pointer">
                     Meus Anúncios
                 </a>
             </li>
@@ -60,8 +60,8 @@
 
 </header>
 
-<main class="min-h-screen bg-gray-700">
-    <!--router-outlet-->
+<main class="min-h-screen bg-gray-950">
+    <router-outlet></router-outlet>
 </main>
 
 <footer class="w-full py-4 px-4 md:px-12 bg-gradient-to-tr from-gray-800 via-gray-900 to-black text-white text-sm">

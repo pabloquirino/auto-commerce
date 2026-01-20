@@ -4,7 +4,12 @@ module.exports = {
     "./src/**/*.{html,ts}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        mono: ['DM Mono', 'monospace'],
+        orbitron: ['Orbitron', 'sans-serif']
+      },
+    },
   },
   plugins: [],
 }

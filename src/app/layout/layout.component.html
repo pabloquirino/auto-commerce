@@ -1,0 +1,69 @@
+<header class="bg-gradient-to-tr from-gray-800 via-gray-900 to-black text-white py-6 px-4 md:px-12 shadow-lg">
+
+    <div class="flex items-center justify-between">
+
+        <div class="flex items-center gap-3">
+            <h1 class="hidden md:block md:text-xl lg:text-3xl font-orbitron">Auto Commerce</h1>
+            <img src="/assets/logo/logo.png" alt="Auto Commerce logo" class="w-28 lg:w-32" />
+        </div>
+
+        <nav class="hidden md:block">
+            <ul class="flex space-x-6 font-semibold">
+                <li><a routerLink="#" class="hover:text-yellow-500 cursor-pointer">Explorar</a></li>
+                <li><a routerLink="#" class="hover:text-yellow-500 cursor-pointer">Anunciar</a></li>
+                <li><a routerLink="#" class="hover:text-yellow-500 cursor-pointer">Meus Anúncios</a></li>
+                <li><a routerLink="#" class="hover:text-yellow-500 cursor-pointer">Sair</a></li>
+            </ul>
+        </nav>
+
+        <!-- Mobile Hamburger Button -->
+        <button class="md:hidden focus:outline-none" (click)="isMenuOpen = !isMenuOpen" aria-label="Abrir menu">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <nav *ngIf="isMenuOpen" class="md:hidden mt-4">
+        <ul class="flex flex-col divide-y divide-gray-500/50 font-semibold text-center">
+            <li>
+                <a routerLink="#" class="block py-3 hover:text-yellow-500 cursor-pointer">
+                    Explorar
+                </a>
+            </li>
+            <li>
+                <a routerLink="#" class="block py-3 hover:text-yellow-500 cursor-pointer">
+                    Anunciar
+                </a>
+            </li>
+            <li>
+                <a routerLink="#" class="block py-3 hover:text-yellow-500 cursor-pointer">
+                    Meus Anúncios
+                </a>
+            </li>
+            <li>
+                <a routerLink="#" class="block py-3 hover:text-yellow-500 cursor-pointer">
+                    Sair
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="mt-4">
+        <hr class="border-t border-gray-400 opacity-50" />
+    </div>
+
+    <p class="text-lg mt-2 text-center md:text-left font-mono italic">
+        Compre ou venda veículos com mais facilidade.
+    </p>
+
+</header>
+
+<main class="min-h-screen bg-gray-700">
+    <!--router-outlet-->
+</main>
+
+<footer class="w-full py-4 px-4 md:px-12 bg-gradient-to-tr from-gray-800 via-gray-900 to-black text-white text-sm">
+    <p class="text-white/70 text-center">© {{ currentYear }} — Desenvolvido por <span class="font-semibold text-white">Pablo Quirino</span></p>
+</footer>

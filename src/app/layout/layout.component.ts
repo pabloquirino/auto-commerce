@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from "@angular/router";
 import { RouterLink } from '@angular/router';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   selector: 'app-layout',
@@ -13,4 +14,9 @@ import { RouterLink } from '@angular/router';
 export class LayoutComponent {
   isMenuOpen = false
   currentYear = new Date().getFullYear();
+  toastService: ToastService;
+
+  constructor(toastService: ToastService) {
+    this.toastService = toastService;
+  }
 }

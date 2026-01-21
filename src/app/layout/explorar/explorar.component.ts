@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { CarService } from '../../services/car.service';
+import { Car } from '../../models/car.model';
 
 @Component({
   selector: 'app-explorar',
@@ -11,30 +13,20 @@ import { CommonModule } from '@angular/common';
   templateUrl: './explorar.component.html',
   styleUrl: './explorar.component.scss'
 })
-export class ExplorarComponent {
+export class ExplorarComponent implements OnInit {
+
   searchTerm = '';
   isFilterOpen = false;
 
-  cars = [
-    {
-      brand: 'Honda',
-      model: 'Civic',
-      year: 2020,
-      km: 45000,
-      price: 89000,
-      image: 'assets/cars/civic.jpg'
-    },
-    {
-      brand: 'Toyota',
-      model: 'Corolla',
-      year: 2021,
-      km: 32000,
-      price: 95000,
-      image: 'assets/cars/corolla.jpg'
-    }
-  ];
+  cars: Car[] = [];
+  filteredCars: Car[] = [];
 
-  filteredCars = this.cars;
+  constructor(private carService: CarService) { }
+
+  ngOnInit() {
+    this.cars = this.carService.getAll();
+    this.filteredCars = this.cars;
+  }
 
   onSearch() {
     const term = this.searchTerm.toLowerCase();

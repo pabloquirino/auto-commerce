@@ -11,7 +11,9 @@ export class CarService {
   }
 
   private initStorage() {
-    if (!localStorage.getItem(this.storageKey)) {
+    const cars = localStorage.getItem(this.storageKey);
+
+    if (!cars || JSON.parse(cars).length === 0) {
       localStorage.setItem(this.storageKey, JSON.stringify(MOCK_CARS));
     }
   }

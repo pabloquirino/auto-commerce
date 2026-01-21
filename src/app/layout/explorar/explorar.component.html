@@ -102,8 +102,12 @@
                         {{ car.brand }} {{ car.model }}
                     </h3>
 
-                    <p class="text-sm text-gray-400">
+                    <p class="text-sm text-gray-400 mb-2">
                         {{ car.year }} • {{ car.km }} km
+                    </p>
+
+                    <p class="text-sm text-gray-400 break-words whitespace-normal line-clamp-3">
+                        {{car.description}}
                     </p>
 
                     <p class="text-yellow-400 font-bold text-xl mt-2">

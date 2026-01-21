@@ -74,7 +74,11 @@
                     <label class="block text-sm text-gray-300 mb-1">
                         Descrição
                     </label>
-                    <textarea rows="4" name="description" [(ngModel)]="car.description"
+                    <textarea 
+                        maxlength="140"
+                        rows="4" 
+                        name="description" 
+                        [(ngModel)]="car.description"
                         placeholder="Fale sobre o estado do veículo..."
                         class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/10 text-white placeholder-gray-400 outline-none resize-none">
                     </textarea>

@@ -29,28 +29,12 @@
         </div>
 
         <!-- Empty state -->
-        <div *ngIf="myAds.length === 0" class="rounded-2xl p-10 text-center
-             bg-white/5 backdrop-blur-xl
-             border border-white/10">
-
-            <svg class="w-12 h-12 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="1.5"
-                viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3 7h18M3 12h18M3 17h18" />
-            </svg>
-
-            <h3 class="text-lg font-semibold text-white mb-2">
-                Nenhum anúncio publicado
-            </h3>
+        <div *ngIf="myAds.length === 0" class="p-10 text-center">
 
             <p class="text-gray-400 mb-6">
                 Você ainda não publicou nenhum veículo.
             </p>
-
-            <a routerLink="/anunciar" class="inline-block px-6 py-3 rounded-xl
-               bg-yellow-400 text-gray-900 font-semibold
-               hover:bg-yellow-500 transition">
-                Criar primeiro anúncio
-            </a>
+            
         </div>
 
         <!-- Grid anúncios -->

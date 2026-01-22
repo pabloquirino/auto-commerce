@@ -30,7 +30,7 @@
 
                 <input type="text" placeholder="Buscar por marca, modelo ou ano"
                     class="flex-1 bg-transparent outline-none text-white placeholder-gray-400" [(ngModel)]="searchTerm"
-                    (input)="onSearch()" />
+                    (input)="applyFilters()" />
             </div>
 
         </div>
@@ -52,19 +52,32 @@
         <button (click)="isFilterOpen = false">✕</button>
     </div>
 
-    <select class="w-full mb-3 p-3 rounded bg-white/10 text-white border border-white/10">
-        <option>Marca</option>
+    <select class="w-full mb-3 p-3 rounded bg-white/10 text-white border border-white/10" [(ngModel)]="selectedBrand"
+        (change)="applyFilters()">
+        <option value="">Todas as marcas</option>
+        <option *ngFor="let brand of brands" [value]="brand" class="text-black italic">
+            {{ brand }}
+        </option>
     </select>
 
-    <select class="w-full mb-3 p-3 rounded bg-white/10 text-white border border-white/10">
-        <option>Categoria</option>
+    <select class="w-full mb-3 p-3 rounded bg-white/10 text-white border border-white/10" [(ngModel)]="selectedYear"
+        (change)="applyFilters()">
+        <option [ngValue]="''">Todos os anos</option>
+        <option *ngFor="let year of years" [ngValue]="year" class="text-black italic">
+            {{ year }}
+        </option>
     </select>
 
-    <select class="w-full p-3 rounded bg-white/10 text-white border border-white/10">
-        <option>Preço</option>
+    <select class="w-full p-2 rounded bg-white/10 text-white border border-white/10" [(ngModel)]="selectedPriceRange"
+        (change)="applyFilters()">
+        <option value="" class="text-black italic">Todos os preços</option>
+        <option value="0-50000" class="text-black italic">Até R$ 50.000</option>
+        <option value="50000-100000" class="text-black italic">R$ 50.000 – 100.000</option>
+        <option value="100000-200000" class="text-black italic">R$ 100.000 – 200.000</option>
+        <option value="200000+" class="text-black italic">Acima de R$ 200.000</option>
     </select>
 
-    <button class="mt-6 w-full py-3 rounded-lg bg-yellow-400 text-gray-900 font-semibold">
+    <button class="mt-6 w-full py-3 rounded-lg bg-yellow-400 text-gray-900 font-semibold hover:bg-yellow-600" (click)="isFilterOpen = false">
         Aplicar filtros
     </button>
 </aside>
@@ -76,16 +89,29 @@
         <aside class="hidden md:block rounded-xl bg-white/5 backdrop-blur border border-white/10 p-5 h-fit">
             <h3 class="font-semibold mb-4 text-white">Filtros</h3>
 
-            <select class="w-full mb-3 p-2 rounded bg-white/10 text-white border border-white/10">
-                <option>Marca</option>
+            <select class="w-full mb-3 p-2 rounded bg-white/10 text-white border border-white/10"
+                [(ngModel)]="selectedBrand" (change)="applyFilters()">
+                <option value="">Todas as marcas</option>
+                <option *ngFor="let brand of brands" [value]="brand" class="text-black italic">
+                    {{ brand }}
+                </option>
             </select>
 
-            <select class="w-full mb-3 p-2 rounded bg-white/10 text-white border border-white/10">
-                <option>Categoria</option>
+            <select class="w-full mb-3 p-2 rounded bg-white/10 text-white border border-white/10"
+                [(ngModel)]="selectedYear" (change)="applyFilters()">
+                <option [ngValue]="''">Todos os anos</option>
+                <option *ngFor="let year of years" [ngValue]="year" class="text-black italic">
+                    {{ year }}
+                </option>
             </select>
 
-            <select class="w-full p-2 rounded bg-white/10 text-white border border-white/10">
-                <option>Preço</option>
+            <select class="w-full p-2 rounded bg-white/10 text-white border border-white/10"
+                [(ngModel)]="selectedPriceRange" (change)="applyFilters()">
+                <option value="" class="text-black italic">Todos os preços</option>
+                <option value="0-50000" class="text-black italic">Até R$ 50.000</option>
+                <option value="50000-100000" class="text-black italic">R$ 50.000 – 100.000</option>
+                <option value="100000-200000" class="text-black italic">R$ 100.000 – 200.000</option>
+                <option value="200000+" class="text-black italic">Acima de R$ 200.000</option>
             </select>
         </aside>
 

@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CarService } from '../../services/car.service';
 import { Car } from '../../models/car.model';
 import { ToastService } from '../../services/toast.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-anunciar',
@@ -12,42 +13,88 @@ import { ToastService } from '../../services/toast.service';
   imports: [CommonModule, FormsModule],
   templateUrl: './anunciar.component.html',
 })
-export class AnunciarComponent {
+export class AnunciarComponent implements OnInit {
 
-  car: Partial<Car> = {
-    ownerId: 1 // mock user
-  }
+  car: Partial<Car> = {};
+  isEdit = false;
+  carId?: number;
+  userId?: string;
 
   constructor(
     private carService: CarService,
     private router: Router,
-    private toastService: ToastService
+    private route: ActivatedRoute,
+    private toastService: ToastService,
+    private authService: AuthService
   ) { }
 
-  submit() {
+  ngOnInit(): void {
+    // pegar usuário logado
+    const user = this.authService.auth.currentUser;
+
+    if (!user) {
+      this.toastService.show('Você precisa estar logado');
+      this.router.navigate(['/']);
+      return;
+    }
+
+    this.userId = user.uid;
+
+    // verificar se é edição
+    const id = this.route.snapshot.paramMap.get('id');
+
+    if (id) {
+      this.isEdit = true;
+      this.carId = Number(id);
+
+      const existingCar = this.carService.getById(this.carId);
+
+      // segurança: só o dono pode editar
+      if (!existingCar || existingCar.ownerId !== this.userId) {
+        this.toastService.show('Você não pode editar este anúncio');
+        this.router.navigate(['/layout']);
+        return;
+      }
+
+      this.car = { ...existingCar };
+    }
+  }
+
+  submit(): void {
     if (
       !this.car.brand ||
       !this.car.model ||
       !this.car.year ||
       !this.car.price ||
-      !this.car.km
+      !this.car.km ||
+      !this.userId
     ) {
-      return; // aqui você pode mostrar um erro depois
+      this.toastService.show('Preencha todos os campos obrigatórios');
+      return;
     }
 
-    const carToCreate: Omit<Car, 'id'> = {
-      brand: this.car.brand,
-      model: this.car.model,
-      year: this.car.year,
-      km: this.car.km,
-      price: this.car.price,
-      description: this.car.description ?? '',
-      image: this.car.image ?? '',
-      ownerId: this.car.ownerId!
-    };
+    if (this.isEdit && this.carId) {
+      // EDITAR
+      this.carService.update(this.carId, this.car);
+      this.toastService.show('Anúncio atualizado com sucesso!');
+    } else {
+      // CRIAR
+      this.carService.create(
+        {
+          brand: this.car.brand,
+          model: this.car.model,
+          year: this.car.year,
+          km: this.car.km,
+          price: this.car.price,
+          description: this.car.description ?? '',
+          image: this.car.image ?? ''
+        },
+        this.userId
+      );
 
-    this.carService.create(carToCreate);
-    this.toastService.show('Anúncio publicado com sucesso!');
+      this.toastService.show('Anúncio publicado com sucesso!');
+    }
+
     this.router.navigate(['layout/meus-anuncios']);
 
   }

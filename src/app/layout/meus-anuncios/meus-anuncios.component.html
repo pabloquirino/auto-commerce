@@ -34,7 +34,7 @@
             <p class="text-gray-400 mb-6">
                 Você ainda não publicou nenhum veículo.
             </p>
-            
+
         </div>
 
         <!-- Grid anúncios -->
@@ -59,7 +59,8 @@
                         {{ ad.year }} • {{ ad.km }} km
                     </p>
 
-                    <p class="text-sm text-gray-400 break-words whitespace-normal line-clamp-3 h-[4.5rem] overflow-hidden">
+                    <p
+                        class="text-sm text-gray-400 break-words whitespace-normal line-clamp-3 h-[4.5rem] overflow-hidden">
                         {{ad.description}}
                     </p>
 
@@ -74,13 +75,11 @@
                             Ver
                         </button>
 
-                        <button class="py-2 rounded-lg bg-blue-500/20 hover:bg-blue-500/30
-                     text-blue-400 text-sm transition">
+                        <button class="py-2 rounded-lg bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 text-sm transition" [routerLink]="['/layout/editar', ad.id]">
                             Editar
                         </button>
 
-                        <button (click)="remove(ad.id)" class="py-2 rounded-lg bg-red-500/20 hover:bg-red-500/30
-                     text-red-400 text-sm transition">
+                        <button (click)="remove(ad.id)" class="py-2 rounded-lg bg-red-500/20 hover:bg-red-500/30 text-red-400 text-sm transition">
                             Remover
                         </button>
 

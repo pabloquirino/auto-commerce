@@ -30,17 +30,38 @@ export class CarService {
     return this.getCars();
   }
 
-  getByUser(userId: number): Car[] {
+  getByUser(userId: string): Car[] {
     return this.getCars().filter(car => car.ownerId === userId);
   }
 
-  create(car: Omit<Car, 'id'>) {
+  getById(id: number): Car | undefined {
+    return this.getCars().find(car => car.id === id);
+  }
+
+  create(car: Omit<Car, 'id' | 'ownerId'>, userId: string) {
     const cars = this.getCars();
+
     const newCar: Car = {
       ...car,
-      id: Date.now()
+      id: Date.now(),
+      ownerId: userId
     };
+
     cars.push(newCar);
+    this.saveCars(cars);
+  }
+
+  update(id: number, updatedData: Partial<Car>) {
+    const cars = this.getCars();
+
+    const index = cars.findIndex(car => car.id === id);
+    if (index === -1) return;
+
+    cars[index] = {
+      ...cars[index],
+      ...updatedData
+    };
+
     this.saveCars(cars);
   }
 
@@ -48,4 +69,5 @@ export class CarService {
     const cars = this.getCars().filter(car => car.id !== id);
     this.saveCars(cars);
   }
+
 }

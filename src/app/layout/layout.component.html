@@ -9,18 +9,34 @@
     <div class="flex items-center justify-between">
 
         <div class="flex items-center gap-3">
-            <h1 class="hidden md:block md:text-xl lg:text-3xl font-orbitron">Auto Commerce</h1>
-            <img src="/assets/logo/logo.png" alt="Auto Commerce logo" class="w-28 lg:w-32" />
+            <h1 class="hidden lg:block text-xl xl:text-3xl font-orbitron">Auto Commerce</h1>
+            <img src="/assets/logo/logo.png" alt="Auto Commerce logo" class="w-32" />
         </div>
 
-        <nav class="hidden md:block">
-            <ul class="flex space-x-6 font-semibold">
-                <li><a routerLink="explorar" class="hover:text-yellow-500 cursor-pointer">Explorar</a></li>
-                <li><a routerLink="anunciar" class="hover:text-yellow-500 cursor-pointer">Anunciar</a></li>
-                <li><a routerLink="meus-anuncios" class="hover:text-yellow-500 cursor-pointer">Meus Anúncios</a></li>
-                <li><a routerLink="#" class="hover:text-yellow-500 cursor-pointer">Sair</a></li>
-            </ul>
-        </nav>
+        <div class="items-center hidden md:flex">
+            <nav>
+                <ul class="flex space-x-6 font-semibold">
+                    <li><a routerLink="explorar" class="hover:text-yellow-500 cursor-pointer">Explorar</a></li>
+                    <li><a routerLink="anunciar" class="hover:text-yellow-500 cursor-pointer">Anunciar</a></li>
+                    <li><a routerLink="meus-anuncios" class="hover:text-yellow-500 cursor-pointer">Meus Anúncios</a>
+                    </li>
+                    <li>
+                        <button type="button"
+                            class="hover:text-yellow-500 cursor-pointer bg-transparent border-0 p-0 font-semibold"
+                            (click)="logout()">
+                            Sair
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+            <!-- User profile -->
+            <div *ngIf="authService.user$ | async as user" class="pl-6">
+
+                <img [src]="user.photoURL || '/assets/avatar-default/avatar-default.jpg'" alt="Foto de perfil" class="w-14 h-14 rounded-full object-cover"
+                    referrerpolicy="no-referrer" />
+
+            </div>
+        </div>
 
         <!-- Mobile Hamburger Button -->
         <button class="md:hidden focus:outline-none" (click)="isMenuOpen = !isMenuOpen" aria-label="Abrir menu">
@@ -34,25 +50,26 @@
     <nav *ngIf="isMenuOpen" class="md:hidden mt-4">
         <ul class="flex flex-col divide-y divide-gray-500/50 font-semibold text-center">
             <li>
-                <a routerLink="/layout/explorar" class="block py-3 hover:text-yellow-500 cursor-pointer">
+                <a routerLink="/layout/explorar" class="block py-3 hover:text-yellow-500 cursor-pointer" (click)="isMenuOpen = !isMenuOpen">
                     Explorar
                 </a>
             </li>
             <li>
-                <a routerLink="/layout/anunciar" class="block py-3 hover:text-yellow-500 cursor-pointer">
+                <a routerLink="/layout/anunciar" class="block py-3 hover:text-yellow-500 cursor-pointer" (click)="isMenuOpen = !isMenuOpen">
                     Anunciar
                 </a>
             </li>
             <li>
-                <a routerLink="/layout/meus-anuncios" class="block py-3 hover:text-yellow-500 cursor-pointer">
+                <a routerLink="/layout/meus-anuncios" class="block py-3 hover:text-yellow-500 cursor-pointer" (click)="isMenuOpen = !isMenuOpen">
                     Meus Anúncios
                 </a>
             </li>
             <li>
-                <a routerLink="#" class="block py-3 hover:text-yellow-500 cursor-pointer">
+                <button type="button" class="py-3 hover:text-yellow-500 cursor-pointer" (click)="logout()">
                     Sair
-                </a>
+                </button>
             </li>
+
         </ul>
     </nav>
 
@@ -72,5 +89,6 @@
 
 <footer class="w-full py-4 px-4 md:px-12 bg-gradient-to-tr from-gray-800 via-gray-900 to-black text-white text-sm">
     <p class="text-white/70 text-center">© {{ currentYear }} — Desenvolvido por <span
-            class="font-semibold text-white"><a href="https://github.com/pabloquirino" target="_blank" rel="noopener noreferrer">Pablo Quirino</a> </span></p>
+            class="font-semibold text-white"><a href="https://github.com/pabloquirino" target="_blank"
+                rel="noopener noreferrer">Pablo Quirino</a> </span></p>
 </footer>

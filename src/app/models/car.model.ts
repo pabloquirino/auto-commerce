@@ -7,5 +7,5 @@ export interface Car {
   price: number;
   description: string;
   image: string;
-  ownerId: number;
+  ownerId: string;
 }

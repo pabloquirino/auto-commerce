@@ -6,7 +6,7 @@
     <div class="relative z-10 max-w-4xl text-center px-6">
 
         <div class="mb-8 flex justify-center">
-            <img src="assets/logo/logo.png" alt="Auto Commerce" class="w-32 h-24" />
+            <img src="assets/logo/logo.png" alt="Auto Commerce" class="w-40 h-28 2xl:w-56 2xl:h-40"/>
         </div>
 
         <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
@@ -21,14 +21,14 @@
 
         <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
 
-            <!-- if logged -->
-            <button
-                class="px-8 py-4 rounded-full bg-yellow-400 text-gray-900 font-semibold hover:bg-yellow-300 transition shadow-lg">
-                Olá ..., aproveite o Auto Commerce
+            <!-- logged -->
+            <button *ngIf="authService.user$ | async as user"
+                class="px-8 py-4 rounded-full bg-yellow-400 text-gray-900 font-semibold hover:bg-yellow-300 transition shadow-lg" [routerLink]="'layout'"> 
+                Olá {{ user.displayName }}, aproveite o Auto Commerce
             </button>
 
-            <!-- if NOT logged -->
-            <button
+            <!-- NOT logged -->
+            <button *ngIf="!(authService.user$ | async)" (click)="login()"
                 class="px-8 py-4 rounded-full bg-white text-gray-900 font-semibold hover:bg-gray-100 transition shadow-lg flex items-center gap-3">
                 <img class="w-6 h-6"
                     src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"

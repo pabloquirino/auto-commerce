@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CarService } from '../../services/car.service';
 import { Car } from '../../models/car.model';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-explorar',
@@ -26,7 +27,10 @@ export class ExplorarComponent implements OnInit {
 
   isFilterOpen = false;
 
-  constructor(private carService: CarService) { }
+  constructor(
+    private carService: CarService,
+    public authService: AuthService
+  ) { }
 
   ngOnInit() {
     this.cars = this.carService.getAll();
@@ -70,6 +74,5 @@ export class ExplorarComponent implements OnInit {
       return matchesSearch && matchesYear && matchesBrand && matchesPrice;
     });
   }
-
 
 }

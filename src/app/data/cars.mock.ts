@@ -10,7 +10,7 @@ export const MOCK_CARS: Car[] = [
     price: 55000,
     description: 'Jetta 2.0 de leilão(recuperado de financiamento). ipva e licenciamento 2026, manual e chave reserva, perfeito estado, oportunidade única.',
     image: '/assets/cars/jetta.jpeg',
-    ownerId: 1
+    ownerId: 'mock-user-uid'
   },
 
   {
@@ -22,7 +22,7 @@ export const MOCK_CARS: Car[] = [
     price: 140000,
     description: 'Lancer com modificações na estética, com motor remapeado e escapamento esportivo.',
     image: '/assets/cars/lancer.jpg',
-    ownerId: 1
+    ownerId: 'mock-user-uid'
   },
   
   {
@@ -34,7 +34,7 @@ export const MOCK_CARS: Car[] = [
     price: 600000,
     description: 'BMW M2 (G87) 2024/2025. O puro prazer de dirigir com 460 cv, tração traseira e o icônico motor S58. Uma máquina de performance inigualável.',
     image: '/assets/cars/m2.webp',
-    ownerId: 1
+    ownerId: 'mock-user-uid'
   }
 
 ];

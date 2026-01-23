@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router'
 import { CarService } from '../../services/car.service';
 import { Car } from '../../models/car.model';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-meus-anuncios',
@@ -17,13 +18,20 @@ import { Car } from '../../models/car.model';
 export class MeusAnunciosComponent implements OnInit {
 
   myAds: Car[] = [];
-  userId = 1;
+  userId = 'mock-user-uid';
   successMessage: string | null = null;
 
-  constructor(private carService: CarService) { }
+  constructor(
+    private carService: CarService,
+    private authService: AuthService
+  ) { }
 
   ngOnInit() {
-    this.myAds = this.carService.getByUser(this.userId);
+    this.authService.user$.subscribe(user => {
+      if (!user) return;
+
+      this.myAds = this.carService.getByUser(user.uid);
+    });
 
     const navigation = history.state;
     if (navigation?.successMessage) {
@@ -33,11 +41,16 @@ export class MeusAnunciosComponent implements OnInit {
         this.successMessage = null;
       }, 3000);
     }
+    
   }
 
   remove(id: number) {
     this.carService.delete(id);
-    this.myAds = this.carService.getByUser(this.userId);
+
+    const user = this.authService.auth.currentUser;
+    if (!user) return;
+
+    this.myAds = this.carService.getByUser(user.uid);
   }
 
 }

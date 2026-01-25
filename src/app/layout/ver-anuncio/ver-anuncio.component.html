@@ -1,0 +1,55 @@
+<section *ngIf="car" class="max-w-6xl mx-auto p-6 text-white">
+
+  <!-- Imagem -->
+  <img [src]="car.image" alt="Imagem do carro" class="w-full max-h-[420px] object-cover rounded-xl mb-6" />
+
+  <div class="grid md:grid-cols-3 gap-8">
+
+    <!-- Informações -->
+    <div class="md:col-span-2">
+      <h1 class="text-3xl font-bold mb-2">
+        {{ car.brand }} {{ car.model }}
+      </h1>
+
+      <p class="text-gray-400 mb-4">
+        {{ car.year }} • {{ car.km }} km
+      </p>
+
+      <p class="text-xl text-yellow-400 font-bold mb-6">
+        R$ {{ car.price | number:'1.0-0' }}
+      </p>
+
+      <h2 class="font-semibold mb-2">Descrição</h2>
+      <p class="text-gray-300 leading-relaxed whitespace-pre-line">
+        {{ car.description }}
+      </p>
+    </div>
+
+    <!-- Contato -->
+    <aside class="bg-white/5 border border-white/10 rounded-xl p-6 h-fit">
+
+      <!-- Anunciante -->
+      <div class="flex items-center gap-4 mb-6">
+        <img *ngIf="car.ownerPhoto" [src]="car.ownerPhoto" alt="anuciante" class="w-14 h-14 rounded-full object-cover"
+          referrerpolicy="no-referrer" />
+
+        <div>
+          <p class="font-semibold">
+            {{ car.ownerName }}
+          </p>
+          <p class="text-sm text-gray-400">
+            Anunciante
+          </p>
+        </div>
+      </div>
+
+      <!-- Contato -->
+      <a *ngIf="car.ownerPhone" [href]="getWhatsAppLink(car)" target="_blank"
+        class="block w-full text-center py-3 rounded bg-green-500 text-white font-semibold mb-3">
+        WhatsApp
+      </a>
+
+    </aside>
+
+  </div>
+</section>

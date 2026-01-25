@@ -42,7 +42,8 @@
                         <label class="block text-sm text-gray-300 mb-1">
                             Ano
                         </label>
-                        <input type="number" name="year" [(ngModel)]="car.year" [ngModelOptions]="{ standalone: true }" placeholder="2020"
+                        <input type="number" name="year" [(ngModel)]="car.year" [ngModelOptions]="{ standalone: true }"
+                            placeholder="2020"
                             class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/10 text-white outline-none" />
                     </div>
 
@@ -74,14 +75,20 @@
                     <label class="block text-sm text-gray-300 mb-1">
                         Descrição
                     </label>
-                    <textarea 
-                        maxlength="140"
-                        rows="4" 
-                        name="description" 
-                        [(ngModel)]="car.description"
+                    <textarea maxlength="140" rows="4" name="description" [(ngModel)]="car.description"
                         placeholder="Fale sobre o estado do veículo..."
                         class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/10 text-white placeholder-gray-400 outline-none resize-none">
                     </textarea>
+                </div>
+
+                <!-- Telefone -->
+                <div>
+                    <label class="block text-sm text-gray-300 mb-1">
+                        Telefone
+                    </label>
+                    <input type="tel" name="ownerPhone" pattern="[0-9]+" placeholder="WhatsApp (ex: 5511999999999)"
+                        [(ngModel)]="car.ownerPhone"
+                        class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/10 text-white placeholder-gray-400 outline-none" />
                 </div>
 
                 <!-- Upload imagem -->
@@ -104,11 +111,7 @@
                             Clique para enviar ou arraste a imagem
                         </span>
 
-                        <input 
-                            type="text" 
-                            name="image" 
-                            [(ngModel)]="car.image" 
-                            placeholder="URL da imagem" 
+                        <input type="text" name="image" [(ngModel)]="car.image" placeholder="URL da imagem"
                             class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/10 text-white outline-none" />
 
                     </label>

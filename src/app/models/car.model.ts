@@ -8,4 +8,7 @@ export interface Car {
   description: string;
   image: string;
   ownerId: string;
+  ownerName: string;
+  ownerPhoto: string;
+  ownerPhone: string;
 }

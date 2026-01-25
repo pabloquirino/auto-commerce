@@ -23,6 +23,11 @@ export const layout_routes: Routes = [
                 canActivate: [authGuard],
             },
             {
+                path: 'ver-anuncio/:id',
+                loadComponent: () =>import('./ver-anuncio/ver-anuncio.component').then(m => m.VerAnuncioComponent),
+                canActivate: [authGuard],
+            },
+            {
                 path: 'editar/:id',
                 loadComponent: () =>import('./anunciar/anunciar.component').then(m => m.AnunciarComponent),
                 canActivate: [authGuard],

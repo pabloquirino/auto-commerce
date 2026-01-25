@@ -39,7 +39,7 @@ export class CarService {
   }
 
   create(car: Omit<Car, 'id' | 'ownerId'>, userId: string) {
-    const cars = this.getCars();
+    const cars = this.getAll();
 
     const newCar: Car = {
       ...car,

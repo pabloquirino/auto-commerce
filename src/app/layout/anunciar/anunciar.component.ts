@@ -61,24 +61,31 @@ export class AnunciarComponent implements OnInit {
   }
 
   submit(): void {
+    const user = this.authService.auth.currentUser;
+
+    if (!user) {
+      this.toastService.show('Você precisa estar logado');
+      return;
+    }
+
     if (
       !this.car.brand ||
       !this.car.model ||
       !this.car.year ||
       !this.car.price ||
-      !this.car.km ||
-      !this.userId
+      !this.car.km
     ) {
       this.toastService.show('Preencha todos os campos obrigatórios');
       return;
     }
 
     if (this.isEdit && this.carId) {
-      // EDITAR
+
       this.carService.update(this.carId, this.car);
       this.toastService.show('Anúncio atualizado com sucesso!');
-    } else {
-      // CRIAR
+
+    }
+    else {
       this.carService.create(
         {
           brand: this.car.brand,
@@ -87,9 +94,12 @@ export class AnunciarComponent implements OnInit {
           km: this.car.km,
           price: this.car.price,
           description: this.car.description ?? '',
-          image: this.car.image ?? ''
+          image: this.car.image ?? '',
+          ownerName: user.displayName ?? 'Usuário',
+          ownerPhoto: user.photoURL ?? '',
+          ownerPhone: this.car.ownerPhone ?? ''
         },
-        this.userId
+        user.uid
       );
 
       this.toastService.show('Anúncio publicado com sucesso!');
@@ -98,4 +108,5 @@ export class AnunciarComponent implements OnInit {
     this.router.navigate(['layout/meus-anuncios']);
 
   }
+
 }

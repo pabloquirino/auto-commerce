@@ -77,10 +77,6 @@
         <option value="200000+" class="text-black italic">Acima de R$ 200.000</option>
     </select>
 
-    <button class="mt-6 w-full py-3 rounded-lg bg-yellow-400 text-gray-900 font-semibold hover:bg-yellow-600"
-        (click)="isFilterOpen = false">
-        Aplicar filtros
-    </button>
 </aside>
 
 <section class="px-4 py-6">
@@ -141,7 +137,7 @@
                         R$ {{ car.price | number:'1.0-0' }}
                     </p>
 
-                    <button class="mt-4 w-full py-3 rounded-lg bg-yellow-400 text-gray-900 font-semibold">
+                    <button class="mt-4 w-full py-3 rounded-lg bg-yellow-400 text-gray-900 font-semibold" [routerLink]="['/layout/ver-anuncio', car.id]">
                         Ver anúncio
                     </button>
                 </div>

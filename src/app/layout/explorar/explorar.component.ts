@@ -4,13 +4,15 @@ import { CommonModule } from '@angular/common';
 import { CarService } from '../../services/car.service';
 import { Car } from '../../models/car.model';
 import { AuthService } from '../../services/auth.service';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-explorar',
   imports: [
     FormsModule,
-    CommonModule
-  ],
+    CommonModule,
+    RouterLink
+],
   templateUrl: './explorar.component.html',
   styleUrl: './explorar.component.scss'
 })

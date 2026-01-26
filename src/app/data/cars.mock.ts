@@ -9,7 +9,7 @@ export const MOCK_CARS: Car[] = [
     km: 75000,
     price: 55000,
     description: 'Jetta 2.0 de leilão(recuperado de financiamento). ipva e licenciamento 2026, manual e chave reserva, perfeito estado, oportunidade única.',
-    image: '/assets/cars/jetta.jpeg',
+    image: '/assets/cars/jetta.webp',
     ownerId: 'mock-user-uid',
     ownerName: 'User Default',
     ownerPhoto: '/assets/avatar-default/avatar-default.jpg',

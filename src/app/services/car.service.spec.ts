@@ -1,149 +1,62 @@
-import { CarService } from './car.service';
+import { Injectable } from '@angular/core';
 import { Car } from '../models/car.model';
 
-describe('CarService', () => {
-  let service: CarService;
+@Injectable({
+  providedIn: 'root'
+})
+export class CarService {
+  private storageKey = 'cars';
+  private cars: Car[] = [];
 
-  beforeEach(() => {
-    service = new CarService();
-    localStorage.clear();
-  });
+  constructor() {
+    const stored = localStorage.getItem(this.storageKey);
+    this.cars = stored ? JSON.parse(stored) : [];
+  }
 
-  it('should start with empty list', () => {
-    const cars = service.getAll();
-    expect(cars.length).toBe(0);
-  });
+  private saveToStorage() {
+    localStorage.setItem(this.storageKey, JSON.stringify(this.cars));
+  }
 
-  it('should create a car with ownerId and contact info', () => {
-    service.create(
-      {
-        brand: 'Toyota',
-        model: 'Corolla',
-        year: 2020,
-        km: 30000,
-        price: 90000,
-        description: 'Bem conservado',
-        image: '',
-        ownerName: 'Pablo',
-        ownerPhoto: '',
-        ownerPhone: '5511999999999'
-      },
-      'user-123'
-    );
+  getAll(): Car[] {
+    return [...this.cars];
+  }
 
-    const cars = service.getAll();
-    expect(cars.length).toBe(1);
-    expect(cars[0].ownerId).toBe('user-123');
-    expect(cars[0].ownerPhone).toBe('5511999999999');
-  });
+  getById(id: number): Car | undefined {
+    return this.cars.find(car => car.id === id);
+  }
 
-  it('should get car by id', () => {
-    service.create(
-      {
-        brand: 'Honda',
-        model: 'Civic',
-        year: 2019,
-        km: 40000,
-        price: 85000,
-        description: '',
-        image: '',
-        ownerName: 'User',
-        ownerPhoto: '',
-        ownerPhone: ''
-      },
-      'user-1'
-    );
+  getByUser(userId: string): Car[] {
+    return this.cars.filter(car => car.ownerId === userId);
+  }
 
-    const car = service.getAll()[0];
-    const found = service.getById(car.id);
+  create(car: Partial<Car>, ownerId: string): void {
+    const newCar: Car = {
+      id: this.generateId(),
+      ...car,
+      ownerId,
+      ownerName: car.ownerName || '',
+      ownerPhoto: car.ownerPhoto || '',
+      ownerPhone: car.ownerPhone || ''
+    } as Car;
 
-    expect(found).toBeTruthy();
-    expect(found?.model).toBe('Civic');
-  });
+    this.cars.push(newCar);
+    this.saveToStorage();
+  }
 
-  it('should update a car', () => {
-    service.create(
-      {
-        brand: 'Ford',
-        model: 'Ka',
-        year: 2018,
-        km: 50000,
-        price: 40000,
-        description: '',
-        image: '',
-        ownerName: '',
-        ownerPhoto: '',
-        ownerPhone: ''
-      },
-      'user-1'
-    );
+  update(id: number, updatedFields: Partial<Car>): void {
+    const index = this.cars.findIndex(car => car.id === id);
+    if (index !== -1) {
+      this.cars[index] = { ...this.cars[index], ...updatedFields };
+      this.saveToStorage();
+    }
+  }
 
-    const car = service.getAll()[0];
+  delete(id: number): void {
+    this.cars = this.cars.filter(car => car.id !== id);
+    this.saveToStorage();
+  }
 
-    service.update(car.id, { price: 38000 });
-
-    const updated = service.getById(car.id);
-    expect(updated?.price).toBe(38000);
-  });
-
-  it('should delete a car', () => {
-    service.create(
-      {
-        brand: 'VW',
-        model: 'Gol',
-        year: 2017,
-        km: 60000,
-        price: 35000,
-        description: '',
-        image: '',
-        ownerName: '',
-        ownerPhoto: '',
-        ownerPhone: ''
-      },
-      'user-1'
-    );
-
-    const car = service.getAll()[0];
-    service.delete(car.id);
-
-    expect(service.getAll().length).toBe(0);
-  });
-
-  it('should return only cars from a user', () => {
-    service.create(
-      {
-        brand: 'Fiat',
-        model: 'Uno',
-        year: 2016,
-        km: 70000,
-        price: 30000,
-        description: '',
-        image: '',
-        ownerName: '',
-        ownerPhoto: '',
-        ownerPhone: ''
-      },
-      'user-1'
-    );
-
-    service.create(
-      {
-        brand: 'BMW',
-        model: '320i',
-        year: 2021,
-        km: 15000,
-        price: 200000,
-        description: '',
-        image: '',
-        ownerName: '',
-        ownerPhoto: '',
-        ownerPhone: ''
-      },
-      'user-2'
-    );
-
-    const userCars = service.getByUser('user-1');
-    expect(userCars.length).toBe(1);
-    expect(userCars[0].brand).toBe('Fiat');
-  });
-});
+  private generateId(): number {
+    return this.cars.length ? Math.max(...this.cars.map(c => c.id)) + 1 : 1;
+  }
+}

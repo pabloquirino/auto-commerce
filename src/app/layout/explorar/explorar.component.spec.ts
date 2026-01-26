@@ -3,6 +3,8 @@ import { ExplorarComponent } from './explorar.component';
 import { CarService } from '../../services/car.service';
 import { AuthService } from '../../services/auth.service';
 import { Car } from '../../models/car.model';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('ExplorarComponent', () => {
   let component: ExplorarComponent;
@@ -41,13 +43,21 @@ describe('ExplorarComponent', () => {
       imports: [ExplorarComponent],
       providers: [
         { provide: CarService, useValue: carService },
-        { provide: AuthService, useValue: {} }
+        { provide: AuthService, useValue: {} },
+
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            queryParams: of({}),
+            snapshot: { queryParams: {} }
+          }
+        }
       ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ExplorarComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges(); // ngOnInit
+    fixture.detectChanges(); 
   });
 
   it('should load cars on init', () => {

@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MeusAnunciosComponent } from './meus-anuncios.component';
 import { CarService } from '../../services/car.service';
 import { AuthService } from '../../services/auth.service';
+import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
 describe('MeusAnunciosComponent', () => {
@@ -22,6 +23,14 @@ describe('MeusAnunciosComponent', () => {
             user$: of({ uid: 'user-123' }),
             auth: { currentUser: { uid: 'user-123' } }
           }
+        },
+
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({}),
+            snapshot: { params: {} }
+          }
         }
       ]
     }).compileComponents();
@@ -33,7 +42,7 @@ describe('MeusAnunciosComponent', () => {
   it('should load user ads on init', () => {
     carService.getByUser.and.returnValue([]);
 
-    fixture.detectChanges(); // dispara ngOnInit
+    fixture.detectChanges(); 
 
     expect(carService.getByUser).toHaveBeenCalledWith('user-123');
     expect(component.myAds).toEqual([]);
@@ -41,6 +50,8 @@ describe('MeusAnunciosComponent', () => {
 
   it('should remove ad and reload user ads', () => {
     carService.getByUser.and.returnValue([]);
+
+    carService.delete.and.callFake(() => {});
 
     component.remove(1);
 

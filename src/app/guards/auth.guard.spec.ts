@@ -1,55 +1,65 @@
 import { TestBed } from '@angular/core/testing';
-import {
-  Router,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  UrlTree
-} from '@angular/router';
+import { Router, UrlTree } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { authGuard } from './auth.guard';
 import { Auth } from '@angular/fire/auth';
-import * as authFirebase from '@angular/fire/auth';
-import { of, Observable } from 'rxjs';
+import { Injector, runInInjectionContext } from '@angular/core';
+import { firstValueFrom, Observable } from 'rxjs';
+
+class AuthMock {
+  constructor(private userValue: any) {}
+
+  onIdTokenChanged(callback: any) {
+    callback(this.userValue);
+    return () => {};
+  }
+
+  onAuthStateChanged(callback: any) {
+    callback(this.userValue);
+    return () => {};
+  }
+}
 
 describe('authGuard', () => {
+  let injector: Injector;
+  let mockUser: any = null;
   let router: Router;
-  let userSpy!: jasmine.Spy;
-  let route: ActivatedRouteSnapshot;
-  let state: RouterStateSnapshot;
 
   beforeEach(() => {
-    userSpy = spyOn(authFirebase, 'user');
-
     TestBed.configureTestingModule({
+      imports: [RouterTestingModule.withRoutes([])],
       providers: [
-        { provide: Auth, useValue: {} },
-        Router
+        {
+          provide: Auth,
+          useFactory: () => new AuthMock(mockUser)
+        }
       ]
     });
 
+    injector = TestBed.inject(Injector);
     router = TestBed.inject(Router);
-    route = {} as ActivatedRouteSnapshot;
-    state = {} as RouterStateSnapshot;
   });
 
-  it('should return UrlTree when user is not logged in', (done) => {
-    userSpy.and.returnValue(of(null));
+  it('should return UrlTree when user is not logged in', async () => {
+    mockUser = null;
 
-    const result$ = authGuard(route, state);
-
-    (result$ as Observable<boolean | UrlTree>).subscribe(result => {
-      expect(result instanceof UrlTree).toBeTrue();
-      done();
+    const result = await runInInjectionContext(injector, async () => {
+      const res$ = authGuard({} as any, {} as any) as Observable<boolean | UrlTree>;
+      return await firstValueFrom(res$);
     });
+
+    const expected = router.createUrlTree(['/']); 
+    expect(result).toEqual(expected);
   });
 
-  it('should allow route when user is logged in', (done) => {
-    userSpy.and.returnValue(of({ uid: '123' } as any));
+  it('should allow route when user is logged in', async () => {
+    mockUser = { uid: '123' };
 
-    const result$ = authGuard(route, state);
-
-    (result$ as Observable<boolean | UrlTree>).subscribe(result => {
-      expect(result).toBeTrue();
-      done();
+    const result = await runInInjectionContext(injector, async () => {
+      const res$ = authGuard({} as any, {} as any) as Observable<boolean | UrlTree>;
+      return await firstValueFrom(res$);
     });
+
+    expect(result).toBeTrue();
   });
 });

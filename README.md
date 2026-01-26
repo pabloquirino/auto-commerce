@@ -1,59 +1,110 @@
-# Autocommerce
+# Auto Commerce
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.2.
+**Auto Commerce** é uma plataforma web para **compra e venda de veículos**, desenvolvida com **Angular 19**, que permite aos usuários anunciar, editar e gerenciar seus próprios anúncios após autenticação via **Google (Firebase Auth)**.
 
-## Development server
+_Compatível com dispositivos móveis_ 📱
 
-To start a local development server, run:
+🔗 **Deploy:** https://auto-commerce-eight.vercel.app/
 
-```bash
-ng serve
-```
+---
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## ✨ Funcionalidades
 
-## Code scaffolding
+- 🔐 Autenticação com Google (Firebase Authentication)
+- 📝 Criar anúncios de veículos
+- ✏️ Editar anúncios (somente o proprietário)
+- 🗑️ Excluir anúncios
+- 📋 Listagem de todos os anúncios
+- 🔍 Filtros por:
+  - Modelo
+  - Marca
+  - Ano
+  - Faixa de preço
+- 🔎 Visualização completa do anúncio
+- 📞 Contato com o anunciante via WhatsApp
+- 🧑‍💼 Exibição do perfil do anunciante (nome e foto)
+- 🛡️ Proteção de rotas com Auth Guard
+- 💾 Persistência de dados utilizando LocalStorage (mock)
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+---
 
-```bash
-ng generate component component-name
-```
+## 🛠️ Tecnologias Utilizadas
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- **Angular 19**
+- **Angular Standalone Components**
+- **TypeScript**
+- **Firebase Authentication**
+- **Tailwind CSS**
+- **LocalStorage** (simulação de backend)
+- **Jasmine / Karma** (testes unitários)
 
-```bash
-ng generate --help
-```
+---
 
-## Building
+## 📁 Organização de Pastas
 
-To build the project run:
+```txt
+src/
+├── app/
+│   ├── data/                   # Dados mockados (cars.mock.ts)
+│   │   └── cars.mock.ts
+│   │
+│   ├── environment/            # Dados do firebase
+│   │   └── environment.ts
+│   │ 
+│   │
+│   ├── guards/                 # Guards de autenticação
+│   │   ├── auth.guard.ts
+│   │   └── auth.guard.spec.ts
+│   │
+│   ├── homepage/               # Página inicial pública
+│   │   ├── homepage.component.ts
+│   │   ├── homepage.component.html
+│   │   └── homepage.component.scss
+│   │
+│   ├── layout/                 # Layout principal e páginas protegidas
+│   │   ├── anunciar/           # Página de anúncio de veículo
+│   │   ├── explorar/           # Página de exploração de anúncios
+│   │   ├── meus-anuncios/      # Página de anúncios do usuário
+│   │   ├── ver-anuncio/        # Página de detalhes do anúncio
+│   │   ├── layout.component.ts
+│   │   ├── layout.component.html
+│   │   ├── layout.component.scss
+│   │   └── layout.routes.ts
+│   │
+│   ├── models/                 # Modelo da aplicação
+│   │   └── car.model.ts
+│   │
+│   ├── services/               # Services da aplicação
+│   │   ├── auth.service.ts
+│   │   ├── auth.service.spec.ts
+│   │   ├── car.service.ts
+│   │   ├── car.service.spec.ts
+│   │   └── toast.service.ts
+│   │
+│   ├── app.component.ts
+│   ├── app.component.html
+│   ├── app.component.scss
+│   ├── app.config.ts
+│   └── app.routes.ts
+│
+├── index.html
+├── main.ts
+└── styles.scss
+````
 
-```bash
-ng build
-```
+## 🖼️ Preview da Aplicação
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### Página Inicial
+![Página Inicial](/public/assets/preview/home.png)
 
-## Running unit tests
+### Explorar Anúncios
+![Explorar Anúncios](/public/assets/preview/explorar.png)
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### Ver Anúncio
+![Ver Anúncio](/public/assets/preview/ver-anuncio.png)
 
-```bash
-ng test
-```
+## 📌 Observações
+  - Este projeto utiliza LocalStorage para simular um backend.
+  - A autenticação é real, feita via Firebase Auth (Google).
+  - O foco é demonstrar boas práticas com Angular moderno, não um produto final comercial.
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

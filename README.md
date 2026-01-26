@@ -8,6 +8,11 @@ _Compatível com dispositivos móveis_ 📱
 
 ---
 
+## 📌 Observações
+  - Este projeto utiliza LocalStorage para simular um backend.
+  - A autenticação é real, feita via Firebase Auth (Google).
+  - O foco é demonstrar boas práticas com Angular moderno, não um produto final comercial.
+
 ## ✨ Funcionalidades
 
 - 🔐 Autenticação com Google (Firebase Authentication)
@@ -102,9 +107,3 @@ src/
 
 ### Ver Anúncio
 ![Ver Anúncio](/public/assets/preview/ver-anuncio.png)
-
-## 📌 Observações
-  - Este projeto utiliza LocalStorage para simular um backend.
-  - A autenticação é real, feita via Firebase Auth (Google).
-  - O foco é demonstrar boas práticas com Angular moderno, não um produto final comercial.
-

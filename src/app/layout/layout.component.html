@@ -4,7 +4,7 @@
     {{ toastService.message }}
 </div>
 
-<header class="bg-gradient-to-tr from-gray-800 via-gray-900 to-black text-white py-6 px-4 md:px-12 shadow-lg">
+<header class="relative bg-gradient-to-tr from-gray-800 via-gray-900 to-black text-white py-6 px-4 md:px-12 shadow-lg">
 
     <div class="flex items-center justify-between">
 
@@ -32,8 +32,8 @@
             <!-- User profile -->
             <div *ngIf="authService.user$ | async as user" class="pl-6">
 
-                <img [src]="user.photoURL || '/assets/avatar-default/avatar-default.jpg'" alt="Foto de perfil" class="w-14 h-14 rounded-full object-cover"
-                    referrerpolicy="no-referrer" />
+                <img [src]="user.photoURL || '/assets/avatar-default/avatar-default.jpg'" alt="Foto de perfil"
+                    class="w-14 h-14 rounded-full object-cover" referrerpolicy="no-referrer" />
 
             </div>
         </div>
@@ -47,20 +47,29 @@
     </div>
 
     <!-- Mobile Menu -->
-    <nav *ngIf="isMenuOpen" class="md:hidden mt-4">
+    <nav [ngClass]="{
+    'max-h-96 opacity-100': isMenuOpen,
+    'max-h-0 opacity-0': !isMenuOpen
+  }" class="absolute top-full left-0 w-full md:hidden bg-gray-900 overflow-hidden
+         transition-all duration-300 ease-in-out z-50">
+
         <ul class="flex flex-col divide-y divide-gray-500/50 font-semibold text-center">
+            
             <li>
-                <a routerLink="/layout/explorar" class="block py-3 hover:text-yellow-500 cursor-pointer" (click)="isMenuOpen = !isMenuOpen">
+                <a routerLink="/layout/explorar" class="block py-3 hover:text-yellow-500 cursor-pointer"
+                    (click)="isMenuOpen = false">
                     Explorar
                 </a>
             </li>
             <li>
-                <a routerLink="/layout/anunciar" class="block py-3 hover:text-yellow-500 cursor-pointer" (click)="isMenuOpen = !isMenuOpen">
+                <a routerLink="/layout/anunciar" class="block py-3 hover:text-yellow-500 cursor-pointer"
+                    (click)="isMenuOpen = false">
                     Anunciar
                 </a>
             </li>
             <li>
-                <a routerLink="/layout/meus-anuncios" class="block py-3 hover:text-yellow-500 cursor-pointer" (click)="isMenuOpen = !isMenuOpen">
+                <a routerLink="/layout/meus-anuncios" class="block py-3 hover:text-yellow-500 cursor-pointer"
+                    (click)="isMenuOpen = false">
                     Meus Anúncios
                 </a>
             </li>
@@ -71,6 +80,7 @@
             </li>
 
         </ul>
+
     </nav>
 
     <div class="mt-4">
